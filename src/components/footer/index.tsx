@@ -1,5 +1,9 @@
 import './index.scss';
 
 export function Footer() {
-  <h1>teste</h1>
+  return(
+  <footer>
+    <p className="footer">Oliveira&amp;Rondelli</p>
+  </footer>
+  )
 }

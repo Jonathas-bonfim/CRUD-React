@@ -1,4 +1,5 @@
 import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
 
 import editing from '../../assets/images/editing.png';
 import del from '../../assets/images/delete.png';
@@ -8,11 +9,11 @@ import './index.scss'
 export function Home() {
   return (
     <>
+      <body>
       <header>
         <Header />
       </header>
-      {/* <body> */}
-      {/* <form action=""> */}
+      <form action="">
       <div className="div-search">
         <div className="components-search">
           <div className="search-id search-components">
@@ -41,12 +42,15 @@ export function Home() {
           </div>
 
           <button className="search search-buttons">Pesquisar</button>
-          {/* <button className="include search-buttons">Incluir</button> */}
 
         </div>
       </div>
-      {/* </form> */}
-      <a href="#" className="button">+ Incluir Registro</a>
+      </form>
+
+      <div className="div-include">
+      <a href="#" className="button-include">+ Incluir Registro</a>
+      </div>
+
       <table id="data-table">
         <thead>
           <tr className="table-description">
@@ -101,10 +105,10 @@ export function Home() {
             <td className="del"> <img src={del} alt="Excluir" /> </td>
           </tr>
         </tbody>
-
       </table>
+      </body>
 
-      {/* </body> */}
+      <Footer/>
 
     </>
   )

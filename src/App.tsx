@@ -1,7 +1,13 @@
 
+
+
+import { Home } from './pages/home';
+
+import './pages/global.scss'
+
 function App() {
   return (
-    <h1 className="teste">teste</h1>
+    <Home />
   );
 }
 export default App;

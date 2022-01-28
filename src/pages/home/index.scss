@@ -1,7 +1,7 @@
 body {
+  height: 100vh;
   background: #e9e9ec;
   z-index: -1;
-  
 }
 
 .div-search {
@@ -59,10 +59,9 @@ body {
   }
 }
 
-.div-include{
+.div-include {
   width: min(90vw, 1140px);
   margin: auto;
-
 
   .button-include {
     display: inline-block;
@@ -74,14 +73,12 @@ body {
   }
 }
 
-
 #data-table {
   border-spacing: 0 0.5rem;
   margin: auto;
 
   width: min(90vw, 1140px);
   margin: auto;
-
 
   img {
     cursor: pointer;
@@ -130,5 +127,3 @@ table tbody tr td:last-child {
 td.description {
   color: var(--dark-blue);
 }
-
-

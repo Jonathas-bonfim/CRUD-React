@@ -20,7 +20,7 @@ export function Home() {
               <div className="components-search">
                 <div className="search-id search-components">
                   <p>ID</p>
-                  <input type="number" />
+                  <input type="number" min={0} />
                 </div>
 
                 <div className="search-symbol search-components">

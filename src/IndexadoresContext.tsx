@@ -3,7 +3,7 @@ import { api } from "./services/api";
 
 
 interface Indexador {
-  id: string,
+  id: number,
   simbolo: string,
   nome: string,
   dataCadastro: string,
@@ -22,6 +22,7 @@ interface IndexadoresProviderProps {
 interface IndexadoresContextData {
   indexadores: Indexador[];
   createIndexador: (indexador: IndexadorInput) => Promise<void>;
+  updateIndexador: (indexador: IndexadorInput) => Promise<void>;
 }
 
 export const IndexadoresContext = createContext<IndexadoresContextData>(
@@ -37,13 +38,15 @@ export function IndexadoresProvider({ children }: IndexadoresProviderProps) {
 
 
   async function createIndexador(indexadorInput: IndexadorInput) {
-    const response = await api.post('/', indexadorInput)
-    const { indexadorId } = response.data.data;
-    console.log(indexadorId);
+    await api.post('/', indexadorInput)
+  }
+
+  async function updateIndexador(indexadorInput: IndexadorInput) {
+    await api.patch('/', indexadorInput)
   }
 
   return (
-    <IndexadoresContext.Provider value={{ indexadores, createIndexador }}>
+    <IndexadoresContext.Provider value={{ indexadores, createIndexador, updateIndexador }}>
       {children}
     </IndexadoresContext.Provider>
   )

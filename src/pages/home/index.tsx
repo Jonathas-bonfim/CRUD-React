@@ -1,10 +1,10 @@
-import { FormEvent, useEffect, useState, useContext } from "react";
+import { FormEvent, useState, useContext } from "react";
 import { IndexadoresContext } from "../../IndexadoresContext";
 import { toast } from "react-toastify";
 
 
 import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
+// import { Footer } from "../../components/footer";
 
 import Modal from 'react-modal';
 
@@ -13,12 +13,14 @@ import del from '../../assets/images/delete.png';
 import closeImg from '../../assets/images/close.png'
 
 import './index.scss'
+import { api } from "../../services/api";
 
 
 export function Home() {
   const { indexadores, createIndexador } = useContext(IndexadoresContext);
-
   const [isNewRegisterModalOpen, setIsNewRegisterModalOpen] = useState(false);
+
+  // const { searchIndexadorId, setSearchIndexadorId } = useState();
 
   function handleOpenNewRegisterModal() {
     setIsNewRegisterModalOpen(true);
@@ -29,10 +31,80 @@ export function Home() {
     window.location.reload();
   }
 
-  function HandleDeleteIndexador() {
+  function HandleDeleteIndexador(DeleteId: number) {
     if (window.confirm('Tem certeza que você deseja excluir este registro?')) {
+      api.delete(`/${DeleteId}`)
+        .then(response => {
+          toast('Registro Excluído', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type: "success",
+            theme: "colored",
+          })
+          setTimeout(() => {
+            window.location.reload();
+            console.log(response);
+          }, 3000)
+        }).catch(err => {
+          const error = err.response.data.errors.errorMessage;
+          toast(error, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type: "error",
+            theme: "colored",
+          })
+        });
     }
   }
+
+  // function HandleUpdateIndexador(updateId: number) {
+  //   updateIndexador({
+  //     nome,
+  //     simbolo
+  //   })
+  //     .then(response => {
+  //       toast('Atualizado', {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         type: "success",
+  //         theme: "colored",
+  //       })
+  //       setSimbolo('');
+  //       setNome('');
+  //       console.log(response)
+  //     }).catch(err => {
+  //       const error = err.response.data.errors.errorMessage;
+  //       toast(error, {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         type: "error",
+  //         theme: "colored",
+  //       })
+  //       setSimbolo('');
+  //       setNome('');
+  //     });
+  // }
+
 
   const [simbolo, setSimbolo] = useState('');
   const [nome, setNome] = useState('');
@@ -55,9 +127,9 @@ export function Home() {
           type: "success",
           theme: "colored",
         })
+        console.log(response)
         setSimbolo('');
         setNome('');
-        console.log(response)
       }).catch(err => {
         const error = err.response.data.errors.errorMessage;
         toast(error, {
@@ -84,7 +156,8 @@ export function Home() {
           <Header />
         </header>
         <main>
-          <form action="">
+          {/* <form onSubmit={() => HandleUpdateIndexador(searchIndexadorId)}> */}
+          <form>
             <div className="div-search">
               <div className="components-search">
                 <div className="search-id search-components">
@@ -112,7 +185,12 @@ export function Home() {
                   <input type="date" />
                 </div>
 
-                <button className="search search-buttons">Pesquisar</button>
+                <button
+                  className="search search-buttons"
+                // onSubmit={() => HandleUpdateIndexador(searchIndexadorId)}
+                >
+                  Pesquisar
+                </button>
 
               </div>
             </div>
@@ -180,22 +258,22 @@ export function Home() {
                     <td className="symbol">{indexador.simbolo}</td>
                     <td className="name">{indexador.nome}</td>
                     <td className="dateInclude">
-                      {/* {indexador.dataCadastro} */}
                       {new Intl.DateTimeFormat('pt-BR').format(
                         new Date(indexador.dataCadastro)
                       )}
                     </td>
                     <td className="dateAlteration">
-                      {/* {indexador.dataAlteracao} */}
-                      {new Intl.DateTimeFormat('pt-BR').format(
-                        new Date(indexador.dataAlteracao)
-                      )}
+                      {
+                        (
+                          new Intl.DateTimeFormat('pt-BR').format(
+                            new Date(indexador.dataAlteracao))
+                        )}
                     </td>
                     <td className="edit">
                       <img src={editing} alt="Editar" />
                     </td>
                     <td className="del"
-                      onClick={HandleDeleteIndexador}
+                      onClick={() => HandleDeleteIndexador(indexador.id)}
                     >
                       <img src={del} alt="Excluir" />
                     </td>
@@ -206,9 +284,9 @@ export function Home() {
             </tbody>
           </table>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </>
-    </body>
+    </body >
 
   )
 }

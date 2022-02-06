@@ -1,35 +1,21 @@
-import { FormEvent, useState, useContext } from "react";
+import { useContext } from "react";
 import { IndexadoresContext } from "../../IndexadoresContext";
 import { toast } from "react-toastify";
-
-
+import { api } from "../../services/api";
 import { Header } from "../../components/header";
-// import { Footer } from "../../components/footer";
-
-import Modal from 'react-modal';
+import { Footer } from "../../components/footer";
 
 import editing from '../../assets/images/editing.png';
 import del from '../../assets/images/delete.png';
-import closeImg from '../../assets/images/close.png'
 
 import './index.scss'
-import { api } from "../../services/api";
 
+interface HomeProps {
+  onOpenNewTransactionModal: () => void;
+}
 
-export function Home() {
-  const { indexadores, createIndexador } = useContext(IndexadoresContext);
-  const [isNewRegisterModalOpen, setIsNewRegisterModalOpen] = useState(false);
-
-  // const { searchIndexadorId, setSearchIndexadorId } = useState();
-
-  function handleOpenNewRegisterModal() {
-    setIsNewRegisterModalOpen(true);
-  };
-
-  function handleCloseNewRegisterModal() {
-    setIsNewRegisterModalOpen(false);
-    window.location.reload();
-  }
+export function Home({ onOpenNewTransactionModal }: HomeProps) {
+  const { indexadores } = useContext(IndexadoresContext);
 
   function HandleDeleteIndexador(DeleteId: number) {
     if (window.confirm('Tem certeza que você deseja excluir este registro?')) {
@@ -66,97 +52,11 @@ export function Home() {
         });
     }
   }
-
-  // function HandleUpdateIndexador(updateId: number) {
-  //   updateIndexador({
-  //     nome,
-  //     simbolo
-  //   })
-  //     .then(response => {
-  //       toast('Atualizado', {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         type: "success",
-  //         theme: "colored",
-  //       })
-  //       setSimbolo('');
-  //       setNome('');
-  //       console.log(response)
-  //     }).catch(err => {
-  //       const error = err.response.data.errors.errorMessage;
-  //       toast(error, {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         type: "error",
-  //         theme: "colored",
-  //       })
-  //       setSimbolo('');
-  //       setNome('');
-  //     });
-  // }
-
-
-  const [simbolo, setSimbolo] = useState('');
-  const [nome, setNome] = useState('');
-  async function handleCreateNewRegister(event: FormEvent) {
-    event.preventDefault();
-
-    createIndexador({
-      nome,
-      simbolo
-    })
-      .then(response => {
-        toast('Cadastrado', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          type: "success",
-          theme: "colored",
-        })
-        console.log(response)
-        setSimbolo('');
-        setNome('');
-      }).catch(err => {
-        const error = err.response.data.errors.errorMessage;
-        toast(error, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          type: "error",
-          theme: "colored",
-        })
-        setSimbolo('');
-        setNome('');
-      });
-  }
-
-
   return (
-    <body>
-      <>
-        <header>
-          <Header />
-        </header>
+    <>
+      <body>
+        <Header />
         <main>
-          {/* <form onSubmit={() => HandleUpdateIndexador(searchIndexadorId)}> */}
           <form>
             <div className="div-search">
               <div className="components-search">
@@ -187,7 +87,7 @@ export function Home() {
 
                 <button
                   className="search search-buttons"
-                // onSubmit={() => HandleUpdateIndexador(searchIndexadorId)}
+                  disabled={true}
                 >
                   Pesquisar
                 </button>
@@ -196,45 +96,11 @@ export function Home() {
             </div>
           </form>
           <div className="div-include">
-            <button onClick={handleOpenNewRegisterModal} className="button-include">+ Incluir Registro</button>
-            <Modal
-              overlayClassName="react-modal-overlay"
-              className="react-modal"
-              isOpen={isNewRegisterModalOpen}
-              onRequestClose={handleCloseNewRegisterModal}
+            <button
+              onClick={onOpenNewTransactionModal}
+              className="button-include"
             >
-              <button
-                type="button"
-                onClick={handleCloseNewRegisterModal}
-                className="react-modal-close"
-              >
-                <img src={closeImg} alt="Fechar Modal" />
-              </button>
-
-              <form onSubmit={handleCreateNewRegister} className="form-modal">
-                <h2>Cadastrar Registro</h2>
-
-                <input
-                  id="simbolo"
-                  type="text"
-                  placeholder="Símbolo"
-                  value={simbolo}
-                  onChange={event => setSimbolo(event.target.value)}
-                />
-
-                <input
-                  type="text"
-                  placeholder="Nome"
-                  value={nome}
-                  onChange={event => setNome(event.target.value)}
-
-                />
-
-                <button type="submit" onSubmit={handleCreateNewRegister}>
-                  Cadastrar
-                </button>
-              </form>
-            </Modal>
+              + Incluir Registro</button>
           </div>
 
           <table id="data-table">
@@ -284,9 +150,9 @@ export function Home() {
             </tbody>
           </table>
         </main>
-        {/* <Footer /> */}
-      </>
-    </body >
+      </body >
+      <Footer />
+    </>
 
   )
 }

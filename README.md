@@ -1,6 +1,6 @@
 ## 👋👋 Olá, bem vindo ao site CRUD React.
 
-#### O site foi um desafio proposto pela empresa Oliveira e Rondelli com objetivo de testar o conhecimento dos desenvolvedores, embora a aplicação esteja adptada e faltando apenas alguns detalhes, as implementações de pesquisa e edição estão indisponíveis.
+#### O site foi um desafio proposto pela empresa Oliveira e Rondelli com objetivo de testar o conhecimento dos desenvolvedores, as funcionalidades de edição e pesquisa não se encontram disponíveis no site.
  
    > ** Dependências: ** <br/>
     `yarn` ou `npm install`

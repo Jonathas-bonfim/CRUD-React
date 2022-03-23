@@ -20,7 +20,7 @@
 
 > A hospedagem foi feita no Netlify<br/>
   
-> #### Link do website: <https://jonathasnfts.netlify.app//>
+> #### A API do site foi desativada, irei implantar uma API local e colocarei o site em produção novamente.
 
 ## Page
 ![crud](https://user-images.githubusercontent.com/58302084/153870989-e0695f4e-49b1-42bb-ae5e-2756c818fbfd.gif)
